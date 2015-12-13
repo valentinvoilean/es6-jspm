@@ -278,7 +278,6 @@ Install bootstrap through jspm:
 
 ```shell
 jspm install bootstrap
-jspm install css
 ```
 
 Create a new file named "dropdown.js" inside the "/src/js/" folder.
