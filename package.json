@@ -1,0 +1,43 @@
+{
+  "name": "es6-jspm",
+  "version": "1.0.0",
+  "description": "Understanding ECMAScript 6 ==========================",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valentinvoilean/es6-jspm.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/valentinvoilean/es6-jspm/issues"
+  },
+  "homepage": "https://github.com/valentinvoilean/es6-jspm#readme",
+  "devDependencies": {
+    "browser-sync": "^2.10.0",
+    "gulp": "^3.9.0",
+    "gulp-sass": "^2.1.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "jspm": "^0.16.15",
+    "sass-jspm-importer": "0.0.6"
+  },
+  "jspm": {
+    "directories": {
+      "baseURL": "src"
+    },
+    "dependencies": {
+      "bootstrap": "github:twbs/bootstrap@^3.3.6",
+      "css": "github:systemjs/plugin-css@^0.1.20",
+      "jquery": "github:components/jquery@^2.1.4",
+      "normalize.scss": "npm:normalize.scss@^0.1.0"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4"
+    }
+  }
+}
