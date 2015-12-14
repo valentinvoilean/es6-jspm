@@ -34,13 +34,14 @@
 //EX 3.1. Template Strings
 //Update the following code using back-ticks
 (function(){
-  var myTooLongString = "A long time ago, in a galaxy far," +
-    "far away...." +
-    "It is a period of civil war." +
-    "Rebel spaceships, striking" +
-    "from a hidden base, have won" +
-    "their first victory against" +
-    "the evil Galactic Empire.";
+  var myTooLongString =
+    `A long time ago, in a galaxy far,
+    far away....
+    It is a period of civil war.
+    Rebel spaceships, striking
+    from a hidden base, have won
+    their first victory against
+    the evil Galactic Empire.`;
 
   console.log(myTooLongString);
 }());
@@ -56,5 +57,5 @@
   items.push("light saber");
 
   var total = 100.5;
-  document.getElementById('ex3').innerHTML = 'You have ' + items.length + ' item(s) in your basket for a total of $'+ total;
+  document.getElementById('ex3').innerHTML = `You have ${items.length} item(s) in your basket for a total of $${total}`;
 }());
