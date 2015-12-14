@@ -8,7 +8,7 @@
 // What is wrong with the following code ?
 // Please try to fix it with & without the "let" keyword.
 
-(function () {
+/*(function(){
 
   console.log('EX 2.1 - "let" keyword');
   console.log('======================');
@@ -29,7 +29,7 @@
     func();
   });
 
-}());
+}());*/
 
 
 /**
@@ -38,7 +38,7 @@
 
 //EX 3.1. Template Strings
 //Update the following code using back-ticks
-(function () {
+/*(function () {
 
   console.log('EX 3.1. Template Strings - back-ticks');
   console.log('=====================================');
@@ -53,12 +53,12 @@
     the evil Galactic Empire.`;
 
   console.log(myTooLongString);
-}());
+}());*/
 
 
 //EX 3.2. Template Strings
 //Update the following code using String Substitution
-(function () {
+/*(function () {
 
   console.log('EX 3.2. Template Strings - String Substitution');
   console.log('======================');
@@ -71,7 +71,7 @@
 
   var total = 100.5;
   console.log(`You have ${items.length} item(s) in your basket for a total of $${total}`);
-}());
+}());*/
 
 
 /**
