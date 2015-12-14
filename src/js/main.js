@@ -8,7 +8,7 @@
 // What is wrong with the following code ?
 // Please try to fix it with & without the "let" keyword.
 
-(function () {
+/*(function(){
 
   console.log('EX 2.1 - "let" keyword');
   console.log('======================');
@@ -29,7 +29,7 @@
     func();
   });
 
-}());
+}());*/
 
 
 /**
