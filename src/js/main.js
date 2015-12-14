@@ -10,6 +10,9 @@
 
 (function(){
 
+  console.log('EX 2.1 - "let" keyword');
+  console.log('======================');
+
   let funcs = [];
 
   //for (let i=0; i < 10; i++) {
