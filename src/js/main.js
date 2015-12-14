@@ -37,6 +37,10 @@
 //EX 3.1. Template Strings
 //Update the following code using back-ticks
 (function(){
+
+  console.log('EX 3.1. Template Strings - back-ticks');
+  console.log('=====================================');
+
   var myTooLongString = "A long time ago, in a galaxy far," +
     "far away...." +
     "It is a period of civil war." +
@@ -52,6 +56,10 @@
 //EX 3.2. Template Strings
 //Update the following code using String Substitution
 (function(){
+
+  console.log('EX 3.2. Template Strings - String Substitution');
+  console.log('======================');
+
   var items = [];
 
   items.push("banana");
@@ -59,5 +67,5 @@
   items.push("light saber");
 
   var total = 100.5;
-  document.getElementById('ex3').innerHTML = 'You have ' + items.length + ' item(s) in your basket for a total of $'+ total;
+  console.log('You have ' + items.length + ' item(s) in your basket for a total of $'+ total);
 }());
