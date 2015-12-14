@@ -1,41 +1,95 @@
-Understanding ECMAScript 6
-==========================
+EX 2. "let" & "const" declarations
+==================================
 
-Setting up the Dev Environment with NPM, GULP & JSPM
--------------------------------------------------------
+"Let" Declarations
+-------------------
 
-__Step 1.__ Run `npm install` to install all the npm packages
+The scope of a __var__ declared in a JS function is the whole body of that function.
 
-__Step 2.__ Run `jspm install` to install all the jspm packages
+__An example of a variable clash__
 
-__Step 3.__ Create & remove the bundles
+```javascript
 
-If you had a chance to check the Network tab inside the Developer Tools, you noticed there were done extra xhr requests
-to load the main.js, dropdown.js, jquery, bootstrap, bootstrap.css. 
-To combine and minify all these files, we need to create a bundle.
+var x = 999;
 
-To do this, you must run `jspm bundle module1 + module2 --inject `,  where "module1, module2" represent 
-the modules created:
+for(var i =0; i<10; i++){
+    var x = i * 2;
+    console.log(x);
+}
 
-In our case:
+console.log('this is the final value of x', x);
 
-```shell
-jspm bundle js/main + js/dropdown + jquery + bootstrap --inject
 ```
 
-First time, you get an error related to the "css" jspm package, therefore install the next package to solve it:
+Running the above code produces the wrong results, it changes the outer x from 999 to 18 after the loop, 
+as you can see from this output:
+
 
 ```shell
-jspm install npm:clean-css --dev
+0
+2
+4
+6
+8
+10
+12
+14
+16
+18
+this is the final value of x 18
 ```
 
-Restart the server and check the Network tab. You should see a new file called "build.js" instead of all the bunch of
-files you had before.
+__Fix it with let__
 
-To unbundle, use 
+The let declaration syntax is the same as the syntax for var. You can basically replace var with let to declare a 
+variable, but limit the variable’s scope to only the current code block. Since let declarations are not hoisted to the 
+top of the enclosing block, you may want to always place let declarations first in the block, so that they are 
+available to the entire block. 
+
+```javascript
+var x = 999;
+
+for(var i =0; i<10; i++){
+    let x = i * 2;
+    console.log(x);
+}
+
+console.log('this is the final value of x', x);
+```
+
+Simply introducing let in the inner scope leaves the outer x to be 999, this is the output:
+
 ```shell
-jspm unbundle
+0
+2
+4
+6
+8
+10
+12
+14
+16
+18
+this is the final value of x 999
 ```
 
-There are also gulp plugins to detect automatically the modules created, to create bundles and to save them in a 
-specific location (like /target )
+Constant Declarations
+---------------------
+Variables declared using __const__ are considered constants, meaning their values cannot be changed once set. For 
+this reason, every const variable must be initialized on declaration, as shown in this example:
+
+```javascript
+// Valid constant
+const maxItems = 30;
+
+// Syntax error: missing initialization
+const name;
+```
+
+Attempting to assign a const to a previously defined constant will throw an error, in both strict and non-strict modes:
+ 
+```javascript
+const maxItems = 5;
+
+maxItems = 6;      // throws error
+```
