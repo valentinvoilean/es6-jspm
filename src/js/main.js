@@ -80,7 +80,7 @@
 
 // EX 4.1. Rest parameters
 // Update the "pick" function using Rest parameters
-(function () {
+/*(function () {
 
   console.log('EX 4.1. Rest parameters');
   console.log('=======================');
@@ -106,12 +106,12 @@
 
   console.log(bookData.author);   // "Nicholas C. Zakas"
   console.log(bookData.year);     // 2015
-}());
+}());*/
 
 
 // EX 4.2. The spread operator
 // Update the "d" variable, using the spread operator;
-(function() {
+/*(function() {
 
   console.log('EX 4.2. The spread operator');
   console.log('===========================');
@@ -125,12 +125,12 @@
   d = [...a,b,...c];
 
   console.log(d);
-})();
+})();*/
 
 
 // EX 4.3. Default Parameter Expressions + Arrow functions
 // Change the "inc" function to a fat arrow function; update it with default parameters
-(function () {
+/*(function () {
 
   console.log('EX 4.3. Default Parameter Expressions + Arrow functions');
   console.log('=======================================================');
@@ -160,8 +160,8 @@
 
   getAge(p);
 
-  // setTimeout(() => getAge(p),2000)
-})();
+  setTimeout(() => getAge(p),2000)
+})();*/
 
 
 /**
