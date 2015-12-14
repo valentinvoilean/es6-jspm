@@ -1,97 +1,141 @@
-EX 3. Getting Literal With ES6 Template Strings
-===============================================
+EX 4. Functions
+===============
 
-Syntax
-------
-Template Strings use back-ticks (``) rather than the single or double quotes we’re used to with regular strings. 
-A template string could thus be written as follows:
+Simulating Default Parameters in ECMAScript 5
+---------------------------------------------
+
+In ECMAScript 5 and earlier, you would likely use the following pattern to create a function with default parameters:
 
 ```javascript
-var greeting = `Yo World!`;
+function makeRequest(url, timeout, callback) {
+
+    timeout = timeout || 2000;
+    callback = callback || function() {};
+
+    // the rest of the function
+
+}
 ```
 
-String Substitution
--------------------
-One of their first real benefits is string substitution. Substitution allows us to take any valid JavaScript expression 
-(including say, the addition of variables) and inside a Template Literal, the result will be output as part of the same 
-string.
-
-Template Strings can contain placeholders for string substitution using the ${ } syntax, as demonstrated below:
+ECMAScript 6 makes it easier to provide default values for parameters by providing initializations that are used when the parameter isn’t formally passed. For example:
 
 ```javascript
-// Simple string substitution
-var name = "Brendan";
-console.log(`Yo, ${name}!`);
+function makeRequest(url, timeout = 2000, callback = function() {}) {
 
-// => "Yo, Brendan!"
+    // the rest of the function
+
+}
 ```
 
-As all string substitutions in Template Strings are JavaScript expressions, we can substitute a lot more than variable 
-names. For example, below we can use expression interpolation to embed for some readable inline math:
+Default Parameter Expressions
+-----------------------------
+Perhaps the most interesting feature of default parameter values is that the default value need not be a primitive value. 
+You can, for example, execute a function to retrieve the default parameter, like this:
 
 ```javascript
-var a = 10;
-var b = 10;
-console.log(`JavaScript first appeared ${a+b} years ago. Crazy!`);
-
-//=> JavaScript first appeared 20 years ago. Crazy!
-
-console.log(`The number of JS MVC frameworks is ${2 * (a + b)} and not ${10 * (a + b)}.`);
-//=> The number of JS frameworks is 20 and not 2000.
-```
-
-They are also very useful for functions inside expressions:
-
-```javascript
-function fn() { return "I am a result. Rarr"; }
-console.log(`foo ${fn()} bar`);
-//=> foo I am a result. Rarr bar.
-```
-
-Multiline Strings
------------------
-Any new line characters inserted in the source are part of the template string. Using normal strings, you would have to use the following syntax in order to get multi-line strings:
-
-```javascript
-console.log("string text line 1\n"+
-"string text line 2");
-// "string text line 1
-// string text line 2"
-```
-
-To get the same effect with multi-line strings, you can now write:
-
-```javascript
-console.log(`string text line 1
-string text line 2`);
-// "string text line 1
-// string text line 2"
-```
-
-Tagged Templates
-----------------
-Tagged template strings
-
-Example: If a template string is preceded by an expression it is considered a tagged template string.
-The expression before the template string is called with the parsed template string.
-
-```javascript
-function buildURL(strArray, ...valArray) {
-  var newUrl = strArray[0] + "ja-ja" + "/" + valArray[1] +
-    "/" + valArray[2];
-
-  return newUrl;
+function getValue() {
+    return 5;
 }
 
-var lang = "en-us";
-var a = "library";
-var b = "dn771551.aspx";
+function add(first, second = getValue()) {
+    return first + second;
+}
 
-// Call the tagged template function.
-var url = buildURL`http://msdn.microsoft.com/${lang}/${a}/${b}`;
+console.log(add(1, 1));     // 2
+console.log(add(1));        // 6
+```
 
-console.log(url);
+Rest Parameters
+---------------
+A rest parameter is indicated by three dots (...) preceding a named parameter. That named parameter becomes an Array 
+containing the rest of the parameters passed to the function, which is where the name “rest” parameters originates.
 
-// Output:
-// http://msdn.microsoft.com/ja-ja/library/dn771551.aspx
+In the next example, we use the rest parameters to collect arguments from the second one to the end. We then multiply 
+them by the first one:
+
+```javascript
+function multiply(multiplier, ...theArgs) {
+  return theArgs.map(function (element) {
+    return multiplier * element;
+  });
+}
+
+var arr = multiply(2, 1, 2, 3); 
+console.log(arr); // [2, 4, 6]
+```
+
+The Spread Operator
+-------------------
+Closely related to rest parameters is the spread operator. While rest parameters allow you to specify that multiple 
+independent arguments should be combined into an array, the spread operator allows you to specify an array that should 
+be split and have its items passed in as separate arguments to a function. 
+
+__Example:__ Today if you have an array and want to create a new array with the existing one being part of it, the array 
+literal syntax is no longer sufficient and you have to fall back to imperative code, using a combination of push, 
+splice, concat, etc. With spread syntax this becomes much more succinct:
+
+```javascript
+var parts = ['shoulders', 'knees'];
+var lyrics = ['head', ...parts, 'and', 'toes']; // ["head", "shoulders", "knees", "and", "toes"]
+````
+
+__Example__: it is common to use Function.prototype.apply in cases where you want to use an array as arguments 
+to a function.
+
+```javascript
+let values = [25, 50, 75, 100]
+
+console.log(Math.max.apply(Math, values));  // 100
+```
+
+With ES6 spread you can now write the above as:
+
+```javascript
+let values = [25, 50, 75, 100]
+
+// equivalent to
+// console.log(Math.max(25, 50, 75, 100));
+console.log(Math.max(...values, 125));           // 125
+```
+
+Arrow Functions
+---------------
+An arrow function expression (also known as fat arrow function) has a shorter syntax compared to function expressions 
+and lexically binds the this value (does not bind its own this, arguments, super, or new.target). 
+Arrow functions are always anonymous.
+
+The following arrow function takes a single argument and simply returns it:
+
+```javascript
+var reflect = value => value;
+
+// effectively equivalent to:
+
+var reflect = function(value) {
+    return value;
+};
+```
+
+If you are passing in more than one argument, then you must include parentheses around those arguments, like this:
+
+```javascript
+var sum = (num1, num2) => num1 + num2;
+
+// effectively equivalent to:
+
+var sum = function(num1, num2) {
+    return num1 + num2;
+};
+```
+
+If there are no arguments to the function, then you must include an empty set of parentheses in the declaration, as follows:
+
+```javascript
+var getName = () => "Nicholas";
+
+// effectively equivalent to:
+
+var getName = function() {
+    return "Nicholas";
+};
 ```
