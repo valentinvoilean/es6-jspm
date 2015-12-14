@@ -160,5 +160,75 @@
 
   getAge(p);
 
-  setTimeout(() => getAge(p),2000)
+  // setTimeout(() => getAge(p),2000)
+})();
+
+
+/**
+ * EX 5. Destructuring
+ * Update the code below, so the variables CLASSES & SELECTORS to be defined by destructuring the "options" object
+ */
+
+(function () {
+
+  // let's assume this comes from nn.init
+  let nn = {};
+
+  // let's assume this comes from nn.config
+  const options = {
+    CLASSES: {
+      isHidden: 'isHidden',
+      isVisible: 'isVisible'
+    },
+
+    SELECTORS: {
+      slick: 'slick'
+    }
+  };
+  ////////////////////////////////////////
+
+  nn.AddColors = (function(){
+
+    let
+      _$el,
+      CLASSES,
+      SELECTORS,
+
+      _returnData = function() {
+
+        console.log('Current element is ' + _$el);
+
+        for(let index in CLASSES) {
+          if (CLASSES.hasOwnProperty(index)) {
+            console.log(CLASSES[index]);
+          }
+        }
+
+        for(let index in SELECTORS) {
+          if (SELECTORS.hasOwnProperty(index)) {
+            console.log(SELECTORS[index]);
+          }
+        }
+
+      };
+
+    return {
+      init: function (el, options) {
+        _$el = el;
+        CLASSES = options.CLASSES;
+        SELECTORS = options.SELECTORS;
+
+        _returnData();
+      },
+
+      destroy: function () {
+        CLASSES = null;
+        SELECTORS = null;
+      }
+    }
+  });
+
+  let addColors = new nn.AddColors();
+
+  addColors.init(document.body, options);
 })();
