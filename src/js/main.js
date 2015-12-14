@@ -85,12 +85,12 @@
   console.log('EX 4.1. Rest parameters');
   console.log('=======================');
 
-  function pick(object) {
+  function pick(object, ...keys) {
     let result = {};
 
     // start at the second parameter
-    for (let i = 1, len = arguments.length; i < len; i++) {
-      result[arguments[i]] = object[arguments[i]];
+    for (let i = 0; i < keys.length; i++) {
+      result[keys[i]] = object[keys[i]];
     }
 
     return result;
@@ -122,7 +122,7 @@
   b = "dog";
   c = [42, "cat"];
 
-  d = a.concat(b, c);
+  d = [...a,b,...c];
 
   console.log(d);
 })();
@@ -135,12 +135,7 @@
   console.log('EX 4.3. Default Parameter Expressions + Arrow functions');
   console.log('=======================================================');
 
-  function inc(number, increment) {
-    // set default to 1 if increment not passed
-    // (or passed as undefined)
-    increment = increment || 1;
-    return number + increment;
-  }
+  let inc = (number, increment = 1) => number + increment;
 
   console.log(inc(2, 2));
   console.log(inc(2));
@@ -155,26 +150,15 @@
   console.log('======================');
 
   function Person() {
-    var self = this; // Some choose `that` instead of `self`.
-                     // Choose one and be consistent.
-    self.age = 0;
-
-    setInterval(function () {
-      // The callback refers to the `self` variable of which
-      // the value is the expected object.
-      self.age++;
-    }, 100);
+    this.age = 0;
+    setInterval(() => this.age++, 100);
   }
 
-  var p = new Person();
+  let getAge = person => console.log('The person is ' + person.age + ' years old!');
 
-  var getAge = function (person) {
-    console.log('The person is ' + person.age + ' years old!');
-  };
+  let p = new Person();
 
   getAge(p);
 
-  setTimeout(function(){
-    getAge(p);
-  },2000)
+  setTimeout(() => getAge(p),2000)
 })();
