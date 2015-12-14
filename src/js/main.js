@@ -135,12 +135,13 @@
   console.log('EX 4.3. Default Parameter Expressions + Arrow functions');
   console.log('=======================================================');
 
-  let inc = (number, increment) => {
+  function inc(number, increment) {
     // set default to 1 if increment not passed
     // (or passed as undefined)
     increment = increment || 1;
     return number + increment;
-  };
+  }
+
   console.log(inc(2, 2));
   console.log(inc(2));
 }());
