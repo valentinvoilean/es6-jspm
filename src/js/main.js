@@ -237,18 +237,25 @@
 
 // 6.1 Update the following code with ES6 Classes
 
-function SimpleVehicle(make, year) {
-  this.make = make;
-  this.year = year;
+class SimpleVehicle {
+
+  constructor(make, year){
+    this.make = make;
+    this.year = year;
+  }
+
+  getMake(){
+    console.log(this.make);
+  }
+
+  getYear() {
+    console.log(this.year);
+  };
+
 }
 
-SimpleVehicle.prototype.getMake = function() {
-  console.log(this.make);
-};
-
-SimpleVehicle.prototype.getYear = function() {
-  console.log(this.year);
-};
+console.log('EX 6.1 Update the following code with ES6 Classes');
+console.log('=================================================');
 
 var vehicle = new SimpleVehicle('Mercedes-Benz', 2015);
 vehicle.getMake();
@@ -258,6 +265,93 @@ vehicle.getYear();
 // add the 3rd parameter named "mileage"
 // and add 4 more methods ( getMileage, setMileage, setMake & setYear )
 
+class ComplexVehicle extends SimpleVehicle{
+  constructor(make, year, mileage) {
+    super(make, year);
+    this.mileage = mileage;
+  }
+
+  getMileage() {
+    console.log(this.mileage);
+  }
+
+  setMileage(milleage) {
+    this.mileage = milleage;
+  }
+
+  setMake(make) {
+    this.make = make;
+  }
+
+  setYear(year) {
+    this.year = year;
+  }
+}
+
+console.log('6.2 Create a new Class from "Vehicle" named "ComplexVehicle"');
+console.log('===========================================================');
+
+var vehicle2 = new ComplexVehicle('BMW', 2012, 12000);
+vehicle2.getMileage();
+vehicle2.getMake();
+vehicle2.getYear();
+
+vehicle2.setMake('Audi');
+vehicle2.setYear(2010);
+vehicle2.setMileage(20000);
+
+vehicle2.getMileage();
+vehicle2.getMake();
+vehicle2.getYear();
 
 // 6.3 Update the EX5 with ES6 Classes.
 // Use the "constructor" method instead of "init".
+
+(function () {
+
+  // let's assume this comes from nn.init
+  let nn = {};
+
+  // let's assume this comes from nn.config
+  const options = {
+    CLASSES: {
+      isHidden: 'isHidden',
+      isVisible: 'isVisible'
+    },
+
+    SELECTORS: {
+      slick: 'slick'
+    }
+  };
+  ////////////////////////////////////////
+
+  nn.Slider = class {
+
+    constructor(el, options){
+      this.$el = el;
+      ({CLASSES:this.CLASSES, SELECTORS: this.SELECTORS} = options)
+    }
+
+    returnData(){
+      console.log('Current element is ' + this.$el);
+
+      for(let index in this.CLASSES) {
+        if (this.CLASSES.hasOwnProperty(index)) {
+          console.log(this.CLASSES[index]);
+        }
+      }
+
+      for(let index in this.SELECTORS) {
+        if (this.SELECTORS.hasOwnProperty(index)) {
+          console.log(this.SELECTORS[index]);
+        }
+      }
+    }
+  };
+
+  console.log('EX 6.3 Update the EX5 with ES6 Classes.');
+  console.log('=======================================');
+
+  let slider = new nn.Slider(document.body, options);
+  slider.returnData();
+})();
