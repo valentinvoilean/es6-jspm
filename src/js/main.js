@@ -229,7 +229,7 @@
 
   var slider = new nn.Slider();
   slider.init(document.body, options);
-})();
+})();*/
 
 
 /**
@@ -238,7 +238,7 @@
 
 // 6.1 Update the following code with ES6 Classes
 
-class SimpleVehicle {
+/*class SimpleVehicle {
 
   constructor(make, year){
     this.make = make;
@@ -355,4 +355,8 @@ vehicle2.getYear();
 
   let slider = new nn.Slider(document.body, options);
   slider.returnData();
-})();
+})();*/
+
+/**
+ * EX 7. ES6 Modules - move all the exercises in different modules & import them in the top of this file;
+ */

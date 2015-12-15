@@ -1,178 +1,114 @@
-EX 6. Classes
+EX 7. Modules
 =============
 
-In ECMAScript 5 and earlier, there were no classes, and the closest equivalent was creating a constructor and then 
-assigning methods to its prototype. This approach is called creating a custom type. For example:
+In ES6 each module is defined in its own file. The functions or variables defined in a module are not visible outside 
+unless you explicitly export them. 
+
+Exporting
+---------
 
 ```javascript
-function PersonType(name) {
-    this.name = name;
+// export data
+export var color = "red";
+export let name = "Nicholas";
+export const magicNumber = 7;
+
+// export function
+export function sum(num1, num2) {
+    return num1 + num1;
 }
 
-PersonType.prototype.sayName = function() {  //  shared by all instances of PersonType
-    console.log(this.name);
-};
-
-let person = new PersonType("Nicholas");
-person.sayName();   // outputs "Nicholas"
-
-console.log(person instanceof PersonType);  // true
-console.log(person instanceof Object);      // true
-```
-
-Class Declarations
-------------------
-Here’s the class equivalent of the previous example:
-
-```javascript
-class PersonClass {
-
-    // equivalent of the PersonType constructor
-    constructor(name) {
-        this.name = name;
-    }
-
-    // equivalent of PersonType.prototype.sayName
-    sayName() {
-        console.log(this.name);
-    }
-}
-
-let person = new PersonClass("Nicholas");
-person.sayName();   // outputs "Nicholas"
-
-console.log(person instanceof PersonClass);     // true
-console.log(person instanceof Object);          // true
-
-console.log(typeof PersonClass);                    // "function"
-console.log(typeof PersonClass.prototype.sayName);  // "function"
-```
-
-We can also rewrite it using __class expressions__
-
-```javascript
-// class expressions do not require identifiers after "class"
-let PersonClass = class {
-
-    // equivalent of the PersonType constructor
-    constructor(name) {
-        this.name = name;
-    }
-
-    // equivalent of PersonType.prototype.sayName
-    sayName() {
-        console.log(this.name);
-    }
-};
-
-let person = new PersonClass("Nicholas");
-person.sayName();   // outputs "Nicholas"
-
-console.log(person instanceof PersonClass);     // true
-console.log(person instanceof Object);          // true
-
-console.log(typeof PersonClass);                    // "function"
-console.log(typeof PersonClass.prototype.sayName);  // "function"
-```
-
-Another interesting use of class expressions is to create singletons by immediately invoking the class constructor. 
-To do so, you must use new with a class expression and include parentheses at the end. For example:
-
-```javascript
-let person = new class {
-
-    constructor(name) {
-        this.name = name;
-    }
-
-    sayName() {
-        console.log(this.name);
-    }
-
-}("Nicholas");
-```
-
-person.sayName();       // "Nicholas"
-
-Derived Class
--------------
-Another problem with custom types in ECMAScript 5 and earlier was the extensive process necessary to implement 
-inheritance. To properly inherit, you would need multiple steps. For instance:
-```javascript
-function Rectangle(length, width) {
-    this.length = length;
-    this.width = width;
-}
-
-Rectangle.prototype.getArea = function() {
-    return this.length * this.width;
-};
-
-function Square(length) {
-    Rectangle.call(this, length, length);
-}
-
-Square.prototype = Object.create(Rectangle.prototype, {
-    constructor: {
-        value:Square,
-        enumerable: true,
-        writable: true,
-        configurable: true
-    }
-});
-
-var square = new Square(3);
-
-console.log(square.getArea());              // 9
-console.log(square instanceof Square);      // true
-console.log(square instanceof Rectangle);   // true
-```
-
-Derived classes use the extends keyword to specify the function from which the class should inherit. The prototypes are 
-automatically adjusted and you can access the base class constructor using super(). Here’s the equivalent of the 
-previous example:
-
-```javascript
-class Rectangle {
+// export class
+export class Rectangle {
     constructor(length, width) {
         this.length = length;
         this.width = width;
     }
-
-    getArea() {
-        return this.length * this.width;
-    }
 }
 
-class Square extends Rectangle {
-    constructor(length) {
-
-        // same as Rectangle.call(this, length, length)
-        super(length, length);
-    }
+// this function is private to the module
+function subtract(num1, num2) {
+    return num1 - num2;
 }
 
-var square = new Square(3);
+// define a function
+function multiply(num1, num2) {
+    return num1 * num2;
+}
 
-console.log(square.getArea());              // 9
-console.log(square instanceof Square);      // true
-console.log(square instanceof Rectangle);   // true
+// export later
+export multiply;
 ```
 
-Class Methods
--------------
-The methods on derived classes always shadow methods of the same name on the base class. For instance, you can 
-add getArea() to Square in order to redefine that functionality:
+Importing
+---------
+
+You can import and use identifiers from that module in a number of ways. You can just import one identifier:
 
 ```javascript
-class Square extends Rectangle {
-    constructor(length) {
-        super(length, length);
-    }
+// import just one
+import { sum } from "example";
 
-    // override and shadow Rectangle.prototype.getArea()
-    getArea() {
-        return this.length * this.length;
-    }
+console.log(sum(1, 2));     // 3
+```
+
+If you want to import multiple identifiers from the example module, you can explicitly list them out:
+```javascript
+// import multiple
+import { sum, multiply, magicNumber } from "example";
+console.log(sum(1, magicNumber));   // 8
+console.log(multiply(1, 2));        // 2
+```
+
+There’s also a special case that allows you to import the entire module as a single object. All of the exports are 
+then available on that object as properties. For example:
+```javascript
+// import everything
+import * as example from "example";
+console.log(example.sum(1,
+        example.magicNumber));          // 8
+console.log(example.multiply(1, 2));    // 2
+```
+
+If the module importing the function wants to use a different name, it can also use as:
+
+```javascript
+import { add as sum } from "example";
+console.log(typeof add);            // "undefined"
+console.log(sum(1, 2));             // 3
+```
+
+Exporting and Importing Defaults
+--------------------------------
+
+The module syntax is really optimized for exporting and importing default values from modules. The default value for 
+a module is a single variable, function, or class as specified by the default keyword. For example:
+
+```javascript
+export default function(num1, num2) {
+    return num1 + num2;
 }
+```
+
+or
+
+```javascript
+// equivalent to previous example
+function sum(num1, num2) {
+    return num1 + num2;
+}
+
+export { sum as default };
+```
+
+> **Note:** You can only have one default export per module. It is a syntax error to use the default keyword with 
+multiple exports.
+
+You can import a default value from a module using the following syntax:
+
+```javascript
+// import the default
+import sum from "example";
+
+console.log(sum(1, 2));     // 3
 ```
