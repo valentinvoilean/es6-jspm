@@ -1,113 +1,178 @@
-EX 5. Destructuring
-===================
+EX 6. Classes
+=============
 
-Destructuring is the process of breaking down a data structure into smaller parts.
-
-Arrays
-------
-```javascript
-var [a, b] = [1, 2];
-console.log(a, b);
-//=> 1 2
-```
-
-__Use from functions, only select from pattern__
+In ECMAScript 5 and earlier, there were no classes, and the closest equivalent was creating a constructor and then 
+assigning methods to its prototype. This approach is called creating a custom type. For example:
 
 ```javascript
-var foo = () => {
-  return [1, 2, 3];
+function PersonType(name) {
+    this.name = name;
+}
+
+PersonType.prototype.sayName = function() {  //  shared by all instances of PersonType
+    console.log(this.name);
 };
 
-var [a, b] = foo();
-console.log(a, b);
-// => 1 2
+let person = new PersonType("Nicholas");
+person.sayName();   // outputs "Nicholas"
+
+console.log(person instanceof PersonType);  // true
+console.log(person instanceof Object);      // true
 ```
 
-
-__Ommit surten values__
-```javascript
-var [a, , b] = [1, 2, 3];
-console.log(a, b);
-// => 1 3
-```
-
-
-__Combine with rest (accumulates the rest values)__
-```javascript
-var [a, ...b] = [1, 2, 3];
-console.log(a, b);
-// => 1 [ 2, 3 ]
-```
-
-__Fail-safe.__
-```javascript
-var [, , , a, b] = [1, 2, 3];
-console.log(a, b);
-// => undefined undefined
-```
-
-__Swap variables easily without temp__
-```javascript
-var a = 1, b = 2;
-[b, a] = [a, b];
-console.log(a, b);
-// => 2 1
-```
-
-__Advance deep arrays__
-```javascript
-var [a, [b, [c, d]]] = [1, [2, [[[3, 4], 5], 6]]];
-console.log("a:", a, "b:", b, "c:", c, "d:", d);
-// => a: 1 b: 2 c: [ [ 3, 4 ], 5 ] d: 6
-```
-
-Objects
--------
+Class Declarations
+------------------
+Here’s the class equivalent of the previous example:
 
 ```javascript
-var {user: x} = {user: 5};
-console.log(x);
-// => 5
-```
+class PersonClass {
 
-
-__Fail-safe__
-```javascript
-var {user: x} = {user2: 5};
-console.log(x);
-// => undefined
-```
-
-__More values__
-```javascript
-var {prop: x, prop2: y} = {prop: 5, prop2: 10};
-console.log(x, y);
-// => 5 10
-```
-
-__Short-hand syntax__
-```javascript
-var { prop, prop2} = {prop: 5, prop2: 10};
-console.log(prop, prop2);
-// => 5 10
-```
-
-__Equal to:__
-```javascript
-var { prop: prop, prop2: prop2} = {prop: 5, prop2: 10};
-console.log(prop, prop2);
-// => 5 10
-```
-__Deep objects__
-```javascript
-var {
-  prop: x,
-  prop2: {
-    prop2: {
-      nested: [ , , b]
+    // equivalent of the PersonType constructor
+    constructor(name) {
+        this.name = name;
     }
-  }
-} = { prop: "Hello", prop2: { prop2: { nested: ["a", "b", "c"]}}};
-console.log(x, b);
-// => Hello c
+
+    // equivalent of PersonType.prototype.sayName
+    sayName() {
+        console.log(this.name);
+    }
+}
+
+let person = new PersonClass("Nicholas");
+person.sayName();   // outputs "Nicholas"
+
+console.log(person instanceof PersonClass);     // true
+console.log(person instanceof Object);          // true
+
+console.log(typeof PersonClass);                    // "function"
+console.log(typeof PersonClass.prototype.sayName);  // "function"
+```
+
+We can also rewrite it using __class expressions__
+
+```javascript
+// class expressions do not require identifiers after "class"
+let PersonClass = class {
+
+    // equivalent of the PersonType constructor
+    constructor(name) {
+        this.name = name;
+    }
+
+    // equivalent of PersonType.prototype.sayName
+    sayName() {
+        console.log(this.name);
+    }
+};
+
+let person = new PersonClass("Nicholas");
+person.sayName();   // outputs "Nicholas"
+
+console.log(person instanceof PersonClass);     // true
+console.log(person instanceof Object);          // true
+
+console.log(typeof PersonClass);                    // "function"
+console.log(typeof PersonClass.prototype.sayName);  // "function"
+```
+
+Another interesting use of class expressions is to create singletons by immediately invoking the class constructor. 
+To do so, you must use new with a class expression and include parentheses at the end. For example:
+
+```javascript
+let person = new class {
+
+    constructor(name) {
+        this.name = name;
+    }
+
+    sayName() {
+        console.log(this.name);
+    }
+
+}("Nicholas");
+```
+
+person.sayName();       // "Nicholas"
+
+Derived Class
+-------------
+Another problem with custom types in ECMAScript 5 and earlier was the extensive process necessary to implement 
+inheritance. To properly inherit, you would need multiple steps. For instance:
+```javascript
+function Rectangle(length, width) {
+    this.length = length;
+    this.width = width;
+}
+
+Rectangle.prototype.getArea = function() {
+    return this.length * this.width;
+};
+
+function Square(length) {
+    Rectangle.call(this, length, length);
+}
+
+Square.prototype = Object.create(Rectangle.prototype, {
+    constructor: {
+        value:Square,
+        enumerable: true,
+        writable: true,
+        configurable: true
+    }
+});
+
+var square = new Square(3);
+
+console.log(square.getArea());              // 9
+console.log(square instanceof Square);      // true
+console.log(square instanceof Rectangle);   // true
+```
+
+Derived classes use the extends keyword to specify the function from which the class should inherit. The prototypes are 
+automatically adjusted and you can access the base class constructor using super(). Here’s the equivalent of the 
+previous example:
+
+```javascript
+class Rectangle {
+    constructor(length, width) {
+        this.length = length;
+        this.width = width;
+    }
+
+    getArea() {
+        return this.length * this.width;
+    }
+}
+
+class Square extends Rectangle {
+    constructor(length) {
+
+        // same as Rectangle.call(this, length, length)
+        super(length, length);
+    }
+}
+
+var square = new Square(3);
+
+console.log(square.getArea());              // 9
+console.log(square instanceof Square);      // true
+console.log(square instanceof Rectangle);   // true
+```
+
+Class Methods
+-------------
+The methods on derived classes always shadow methods of the same name on the base class. For instance, you can 
+add getArea() to Square in order to redefine that functionality:
+
+```javascript
+class Square extends Rectangle {
+    constructor(length) {
+        super(length, length);
+    }
+
+    // override and shadow Rectangle.prototype.getArea()
+    getArea() {
+        return this.length * this.length;
+    }
+}
 ```

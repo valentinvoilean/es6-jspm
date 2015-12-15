@@ -229,3 +229,35 @@
 
   nn.addColors.init(document.body, options);
 })();*/
+
+
+/**
+ * EX 6. Classes
+ */
+
+// 6.1 Update the following code with ES6 Classes
+
+function SimpleVehicle(make, year) {
+  this.make = make;
+  this.year = year;
+}
+
+SimpleVehicle.prototype.getMake = function() {
+  console.log(this.make);
+};
+
+SimpleVehicle.prototype.getYear = function() {
+  console.log(this.year);
+};
+
+var vehicle = new SimpleVehicle('Mercedes-Benz', 2015);
+vehicle.getMake();
+vehicle.getYear();
+
+// 6.2 Create a new Class from "Vehicle" named "ComplexVehicle"
+// add the 3rd parameter named "mileage"
+// and add 4 more methods ( getMileage, setMileage, setMake & setYear )
+
+
+// 6.3 Update the EX5 with ES6 Classes.
+// Use the "constructor" method instead of "init".
