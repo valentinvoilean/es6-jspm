@@ -172,10 +172,10 @@
 (function () {
 
   // let's assume this comes from nn.init
-  let nn = {};
+  var nn = {};
 
   // let's assume this comes from nn.config
-  const options = {
+  var options = {
     CLASSES: {
       isHidden: 'isHidden',
       isVisible: 'isVisible'
@@ -187,9 +187,9 @@
   };
   ////////////////////////////////////////
 
-  nn.addColors = (function(){
+  nn.Slider = function(){
 
-    let
+    var
       _$el,
       CLASSES,
       SELECTORS,
@@ -198,13 +198,13 @@
 
         console.log('Current element is ' + _$el);
 
-        for(let index in CLASSES) {
+        for(var index in CLASSES) {
           if (CLASSES.hasOwnProperty(index)) {
             console.log(CLASSES[index]);
           }
         }
 
-        for(let index in SELECTORS) {
+        for(var index in SELECTORS) {
           if (SELECTORS.hasOwnProperty(index)) {
             console.log(SELECTORS[index]);
           }
@@ -226,7 +226,8 @@
         SELECTORS = null;
       }
     }
-  })();
+  };
 
-  nn.addColors.init(document.body, options);
+  var slider = new nn.Slider();
+  slider.init(document.body, options);
 })();
