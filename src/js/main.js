@@ -15,8 +15,8 @@
 
   let funcs = [];
 
-  //for (let i=0; i < 10; i++) {
-  //  funcs.push((function() { return function() { console.log(i); } }()));
+  //for (var i=0; i < 10; i++) {
+  //  funcs.push((function(value) { return function() { console.log(value); } }(i)));
   //}
 
   for (let i=0; i < 10; i++) {
