@@ -1,264 +1,49 @@
-"format es6";
+import options from 'util/nn.config';
+
+import ex2 from 'ex/ex2';
+import {ex3_1, ex3_2} from 'ex/ex3';
+import * as ex4 from 'ex/ex4';
+import * as ex5 from 'ex/ex5';
+import * as ex6 from 'ex/ex6';
 
 /**
  * EX 2. "let" & "const" declarations
  */
 
-// EX 2.1
-// What is wrong with the following code ?
-// Please try to fix it with & without the "let" keyword.
-
-/*(function(){
-
-  console.log('EX 2.1 - "let" keyword');
-  console.log('======================');
-
-  let funcs = [];
-
-  //for (let i=0; i < 10; i++) {
-  //  funcs.push((function() { return function() { console.log(i); } }()));
-  //}
-
-  for (let i = 0; i < 10; i++) {
-    funcs.push(function () {
-      console.log(i);
-    });
-  }
-
-  funcs.forEach(function (func) {
-    func();
-  });
-
-}());*/
-
+ex2();
 
 /**
  * EX 3. Template Strings
  */
 
-//EX 3.1. Template Strings
-//Update the following code using back-ticks
-/*(function () {
-
-  console.log('EX 3.1. Template Strings - back-ticks');
-  console.log('=====================================');
-
-  let myTooLongString =
-    `A long time ago, in a galaxy far,
-    far away....
-    It is a period of civil war.
-    Rebel spaceships, striking
-    from a hidden base, have won
-    their first victory against
-    the evil Galactic Empire.`;
-
-  console.log(myTooLongString);
-}());*/
-
-
-//EX 3.2. Template Strings
-//Update the following code using String Substitution
-/*(function () {
-
-  console.log('EX 3.2. Template Strings - String Substitution');
-  console.log('======================');
-
-  let items = [];
-
-  items.push("banana");
-  items.push("tomato");
-  items.push("light saber");
-
-  var total = 100.5;
-  console.log(`You have ${items.length} item(s) in your basket for a total of $${total}`);
-}());*/
-
-
+ex3_1();
+ex3_2();
 /**
  * EX 4. Functions
  */
 
-// EX 4.1. Rest parameters
-// Update the "pick" function using Rest parameters
-/*(function () {
-
-  console.log('EX 4.1. Rest parameters');
-  console.log('=======================');
-
-  function pick(object, ...keys) {
-    let result = {};
-
-    // start at the second parameter
-    for (let i = 0; i < keys.length; i++) {
-      result[keys[i]] = object[keys[i]];
-    }
-
-    return result;
-  }
-
-  let book = {
-    title: "Understanding ECMAScript 6",
-    author: "Nicholas C. Zakas",
-    year: 2015
-  };
-
-  let bookData = pick(book, "author", "year");
-
-  console.log(bookData.author);   // "Nicholas C. Zakas"
-  console.log(bookData.year);     // 2015
-}());*/
-
-
-// EX 4.2. The spread operator
-// Update the "d" variable, using the spread operator;
-/*(function() {
-
-  console.log('EX 4.2. The spread operator');
-  console.log('===========================');
-
-  var a, b, c, d;
-
-  a = [1,2,3];
-  b = "dog";
-  c = [42, "cat"];
-
-  d = [...a,b,...c];
-
-  console.log(d);
-})();*/
-
-
-// EX 4.3. Default Parameter Expressions + Arrow functions
-// Change the "inc" function to a fat arrow function; update it with default parameters
-/*(function () {
-
-  console.log('EX 4.3. Default Parameter Expressions + Arrow functions');
-  console.log('=======================================================');
-
-  let inc = (number, increment = 1) => number + increment;
-
-  console.log(inc(2, 2));
-  console.log(inc(2));
-}());
-
-
-// EX 4.4. Arrow function
-// Simplify the code with arrow functions
-(function () {
-
-  console.log('EX 4.4. Arrow function');
-  console.log('======================');
-
-  function Person() {
-    this.age = 0;
-    setInterval(() => this.age++, 100);
-  }
-
-  let getAge = person => console.log('The person is ' + person.age + ' years old!');
-
-  let p = new Person();
-
-  getAge(p);
-
-  setTimeout(() => getAge(p),2000)
-})();*/
-
+ex4.part1();
+ex4.part2();
+ex4.part3();
+ex4.part4();
 
 /**
  * EX 5. Destructuring
  * Update the code below, so the variables CLASSES & SELECTORS to be defined by destructuring the "options" object
  */
 
-/*(function () {
-
-  // let's assume this comes from nn.init
-  var nn = {};
-
-  // let's assume this comes from nn.config
-  var options = {
-    CLASSES: {
-      isHidden: 'isHidden',
-      isVisible: 'isVisible'
-    },
-
-    SELECTORS: {
-      slick: 'slick'
-    }
-  };
-  ////////////////////////////////////////
-
-  nn.Slider = function(){
-
-    var
-      _$el,
-      CLASSES,
-      SELECTORS,
-
-      _returnData = function() {
-
-        console.log('Current element is ' + _$el);
-
-        for(var index in CLASSES) {
-          if (CLASSES.hasOwnProperty(index)) {
-            console.log(CLASSES[index]);
-          }
-        }
-
-        for(var index in SELECTORS) {
-          if (SELECTORS.hasOwnProperty(index)) {
-            console.log(SELECTORS[index]);
-          }
-        }
-
-      };
-
-    return {
-      init: function (el, options) {
-        _$el = el;
-        ({CLASSES, SELECTORS} = options);
-
-        _returnData();
-      },
-
-      destroy: function () {
-        CLASSES = null;
-        SELECTORS = null;
-      }
-    }
-  };
-
-  var slider = new nn.Slider();
-  slider.init(document.body, options);
-})();*/
-
+var slider = new ex5.nn.Slider();
+slider.init(document.body, options);
 
 /**
  * EX 6. Classes
  */
 
 // 6.1 Update the following code with ES6 Classes
-
-/*class SimpleVehicle {
-
-  constructor(make, year){
-    this.make = make;
-    this.year = year;
-  }
-
-  getMake(){
-    console.log(this.make);
-  }
-
-  getYear() {
-    console.log(this.year);
-  };
-
-}
-
 console.log('EX 6.1 Update the following code with ES6 Classes');
 console.log('=================================================');
 
-var vehicle = new SimpleVehicle('Mercedes-Benz', 2015);
+var vehicle = new ex6.SimpleVehicle('Mercedes-Benz', 2015);
 vehicle.getMake();
 vehicle.getYear();
 
@@ -266,33 +51,10 @@ vehicle.getYear();
 // add the 3rd parameter named "mileage"
 // and add 4 more methods ( getMileage, setMileage, setMake & setYear )
 
-class ComplexVehicle extends SimpleVehicle{
-  constructor(make, year, mileage) {
-    super(make, year);
-    this.mileage = mileage;
-  }
-
-  getMileage() {
-    console.log(this.mileage);
-  }
-
-  setMileage(milleage) {
-    this.mileage = milleage;
-  }
-
-  setMake(make) {
-    this.make = make;
-  }
-
-  setYear(year) {
-    this.year = year;
-  }
-}
-
 console.log('6.2 Create a new Class from "Vehicle" named "ComplexVehicle"');
 console.log('===========================================================');
 
-var vehicle2 = new ComplexVehicle('BMW', 2012, 12000);
+var vehicle2 = new ex6.ComplexVehicle('BMW', 2012, 12000);
 vehicle2.getMileage();
 vehicle2.getMake();
 vehicle2.getYear();
@@ -308,55 +70,8 @@ vehicle2.getYear();
 // 6.3 Update the EX5 with ES6 Classes.
 // Use the "constructor" method instead of "init".
 
-(function () {
+console.log('EX 6.3 Update the EX5 with ES6 Classes.');
+console.log('=======================================');
 
-  // let's assume this comes from nn.init
-  let nn = {};
-
-  // let's assume this comes from nn.config
-  const options = {
-    CLASSES: {
-      isHidden: 'isHidden',
-      isVisible: 'isVisible'
-    },
-
-    SELECTORS: {
-      slick: 'slick'
-    }
-  };
-  ////////////////////////////////////////
-
-  nn.Slider = class {
-
-    constructor(el, options){
-      this.$el = el;
-      ({CLASSES:this.CLASSES, SELECTORS: this.SELECTORS} = options)
-    }
-
-    returnData(){
-      console.log('Current element is ' + this.$el);
-
-      for(let index in this.CLASSES) {
-        if (this.CLASSES.hasOwnProperty(index)) {
-          console.log(this.CLASSES[index]);
-        }
-      }
-
-      for(let index in this.SELECTORS) {
-        if (this.SELECTORS.hasOwnProperty(index)) {
-          console.log(this.SELECTORS[index]);
-        }
-      }
-    }
-  };
-
-  console.log('EX 6.3 Update the EX5 with ES6 Classes.');
-  console.log('=======================================');
-
-  let slider = new nn.Slider(document.body, options);
-  slider.returnData();
-})();*/
-
-/**
- * EX 7. ES6 Modules - move all the exercises in different modules & import them in the top of this file;
- */
+let slider2 = new ex6.nn.SliderClass(document.body, options);
+slider2.returnData();
