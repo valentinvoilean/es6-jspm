@@ -169,7 +169,7 @@
  * Update the code below, so the variables CLASSES & SELECTORS to be defined by destructuring the "options" object
  */
 
-(function () {
+/*(function () {
 
   // let's assume this comes from nn.init
   let nn = {};
@@ -215,8 +215,7 @@
     return {
       init: function (el, options) {
         _$el = el;
-        CLASSES = options.CLASSES;
-        SELECTORS = options.SELECTORS;
+        ({CLASSES, SELECTORS} = options);
 
         _returnData();
       },
@@ -229,4 +228,4 @@
   })();
 
   nn.addColors.init(document.body, options);
-})();
+})();*/
