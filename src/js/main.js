@@ -187,7 +187,7 @@
   };
   ////////////////////////////////////////
 
-  nn.AddColors = (function(){
+  nn.addColors = (function(){
 
     let
       _$el,
@@ -226,9 +226,7 @@
         SELECTORS = null;
       }
     }
-  });
+  })();
 
-  let addColors = new nn.AddColors();
-
-  addColors.init(document.body, options);
+  nn.addColors.init(document.body, options);
 })();
